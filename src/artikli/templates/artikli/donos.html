@@ -1,0 +1,100 @@
+{% extends "artikli/base.html" %}
+
+
+
+{% block content %}
+
+<div class="container" >
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel  ">
+        <div class="container">
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+                {% for kategorija in kategorije %}
+                <a class="nav-item nav-link" href="{% url 'artikli-donos' %}?kategorija={{ kategorija.kategorija }}">{{ kategorija.kategorija }}</a>
+
+                {% endfor %}
+                
+            </div>
+            
+            </div>
+        </div>
+        </nav>
+    </header>
+
+
+
+    <table class="table">
+
+        <thead>
+            <tr>
+              <th scope="col">Naziv artikla</th>
+              <th scope="col">Nabavna cijena</th>
+              <th scope="col">Dodaj na ulazni račun</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for artikal in artikli %}
+            <tr>
+                <td>{{ artikal.artikal }}</td>
+                <td>{{ artikal.nabavnaCijena }}</td>
+                <td>
+                    <button type="submit" id="{{ artikal.id }}" class="btn" data-url="{% url 'artikli-dodaj-donos' %}?id={{ artikal.id }}" >
+                        Dodaj na ulazni račun
+                    </button>  
+                </td>
+            </tr>
+        {% endfor %}
+        <tr> 
+            <td><form action="{% url 'artikli-pregled-ulaznog-racuna' %}">
+                <input type="submit" value="Pregled ulaznog računa" />
+            </form> </td>
+        </tr>
+        </tbody>
+
+
+    </table>
+</div>
+    
+   
+    <script type="text/javascript">
+        
+            $(".btn").click(function(e){
+                
+                
+                var urlDodaj=$(this).attr('data-url');
+                $.ajax({
+                    type: 'GET',
+                    url: urlDodaj,
+                    success: successFunc
+
+                });       
+
+                function successFunc(response) {
+                        alert(response);
+                    }
+
+                function errorFunc() {
+                        alert('error');
+                    }
+                
+                
+                
+                
+            });
+            
+            
+       
+    </script>
+    
+    
+    
+
+{% endblock %}
+

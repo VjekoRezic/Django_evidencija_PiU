@@ -1,0 +1,161 @@
+{% extends "artikli/base.html" %}
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<form method="GET" action="{% url 'promet_list' %}" class="container">
+    <p>Datum: <input type="text" id="datum" name="datum"></p>
+    <input type="submit" value="Osvježi">
+
+</form>
+
+<h1>Podatci za datum : {{ datum|date:"d. m. Y" }} </h1>
+<table class="table">
+<thead>
+    <tr>
+        <th>
+            <h2 class="bg-steel">Prihodi</h2>
+        </th>
+    </tr>
+
+    <tr>
+      <th scope="col">Artikal</th>
+      <th scope="col">Cijena po komadu</th>
+      <th scope="col">Kvantiteta</th>      
+      <th scope="col">Ukupno</th>
+      
+
+    </tr>
+</thead>
+<tbody>
+{% for stavka in prihodiLista %}
+    <tr>
+        <td>{{ stavka.artikal.artikal }}</td>
+        <td>{{ stavka.artikal.cijena }}</td>
+        <td>{{ stavka.kvantiteta }}</td>
+        <td>{{ stavka.ukupno }}</td>
+        
+    </tr>
+{% endfor %}
+
+</tbody>
+
+
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h2 class="bg-steel">Donos</h2>
+            </th>
+        </tr>
+    
+        <tr>
+          <th scope="col">Artikal</th>
+          <th scope="col">Cijena po paketu</th>
+          <th scope="col">Kvantiteta</th>      
+          <th scope="col">Ukupno</th>
+          
+    
+        </tr>
+    </thead>
+    <tbody>
+    {% for stavka in donos %}
+        <tr>
+            <td>{{ stavka.artikal.artikal }}</td>
+            <td>{{ stavka.artikal.nabavnaCijena }}</td>
+            <td>{{ stavka.kvantiteta }}</td>
+            <td>{{ stavka.ukupno }}</td>
+            
+        </tr>
+    {% endfor %}
+   
+    </tbody>
+    
+    
+</table>
+<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h2 class="bg-steel">Smjene</h2>
+                </th>
+            </tr>
+        
+            <tr>
+              <th scope="col">Radno mjesto</th>
+              <th scope="col">Iznos dnevnice</th>
+              <th scope="col">Odrađenih smjena</th>      
+              <th scope="col">Ukupno</th>
+              
+        
+            </tr>
+        </thead>
+        <tbody>
+            {% for stavka in smjene %}
+                <tr>
+                    <td>{{ stavka.smjena.radnoMjesto }}</td>
+                    <td>{{ stavka.smjena.iznos }}</td>
+                    <td>{{ stavka.kvantiteta }}</td>
+                    <td>{{ stavka.ukupno }}</td>
+                    
+                </tr>
+            {% endfor %}
+       
+        </tbody>        
+</table>
+<table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <h2 class="bg-steel">Ukupno</h2>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Prihodi
+                    </th>
+                    <th>
+                        Donos
+                    </th>
+                    <th>
+                        Smjene
+                    </th>
+                    <th>
+                        Ukupno
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                   <td>{{ prihodi }}</td>
+                
+                   <td>{{ troškovi }}</td>
+               
+                   <td>{{ smjeneUkupno }}</td>
+
+                
+                   <td>{{ ukupno }}</td>
+                </tr>
+            </tbody>
+</table>
+
+
+<script type="text/javascript">
+    $( function() {
+      $( "#datum" ).datepicker({
+        dateFormat: "yy-mm-dd"
+        
+    });
+    } );
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+            <link rel="stylesheet" href="/resources/demos/style.css"> 
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <!-- CSS -->
+            <link rel="stylesheet" type="text/css" href="{% static 'artikli/main.css' %}">
+            <!-- Bootstrap Date-Picker Plugin -->
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+            <title>Promet i usluge</title>
+
+    </head>
+    <body>
+      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <header class="site-header">
+            {% if user.is_authenticated %}
+            <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+              <div class="container">
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                {% if user.is_superuser %}
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                  <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="{% url 'artikli' %}">Artikli</a>
+                    <a class="nav-item nav-link" href="{% url 'promet_list' %}">Promet</a>
+                    <a class="nav-item nav-link" href="{% url 'user-get' %}">Korisnici</a>
+                    <a class="nav-item nav-link" href="{% url 'smjene-lista' %}">Radna mjesta</a>
+                    <a class="nav-item nav-link"  href="{% url 'kategorije-list' %}">Kategorije</a>
+                    <a class="nav-item nav-link"  href="{% url 'paket-list' %}">Ulazni paketi</a>
+                  </div>
+                
+                {% else %}
+
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                  <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="{% url 'artikli' %}">Artikli</a>
+                    <a class="nav-item nav-link" href="{% url 'artikli-donos' %}">Donos</a>
+                    <a class="nav-item nav-link" href="{% url 'smjene' %}">Smjene</a>
+                  </div>
+
+                {% endif %}
+                  
+                  
+                  
+                  
+                  <!-- Navbar Right Side -->
+                  <div class="navbar-nav">
+                      <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                   
+                  </div>
+                </div>
+              </div>
+            </nav>
+            {% endif %}
+          </header>
+
+          <main role="main" class="container">
+
+            <div class="row">
+                <div class="col-md-8" id = "messages">
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+                <div class="col-md-8">
+
+               
+                  {% block content %}  {% endblock %}
+                </div>
+
+
+          </main>
+
+
+
+          <!-- Optional JavaScript -->
+          <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+          
+
+    </body>
+
+
+
+
+</html>

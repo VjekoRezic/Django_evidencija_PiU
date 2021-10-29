@@ -1,0 +1,74 @@
+{% extends  "artikli/base.html" %}
+{% block content %}
+    <div>
+    <table class="table" id="tbl">
+
+        <thead>
+            <tr>
+            <th scope="col">Naziv artikla</th>
+            <th scope="col">Cijena</th>
+            <th scope="col">Količina</th>
+            <th scope="col">Ukloni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in racun.items %}
+                <tr>
+                    <td>{{ value.artikal.artikal }}</td>
+                    <td>{{ value.ukupno }}</td>
+                    <td>{{ value.kvantiteta }}</td>
+                    <td>
+                        <button type="submit" class="btnDel" data-url="{% url 'artikli-ukloni-s-racuna' %}?artikal={{ value.artikal.artikal }}" >
+                            Ukloni s računa
+                        </button>  
+                    </td>
+                </tr>
+            {% endfor %}
+        <tr> 
+            <td><form action="{% url 'promet-spremi-racun' %}" method="POST">{% csrf_token %}
+                <input type="submit" value="Potvrda" />
+            </form> </td>
+        </tr>
+        </tbody>
+
+
+    </table>
+    </div>
+
+    <script type="text/javascript">
+        
+        $(".btnDel").click(function(e){
+            
+            
+            var urlDel=$(this).attr('data-url');
+            
+            
+            
+            $.ajax({
+                type: 'GET',
+                url: urlDel,
+                success: successFunc
+
+            });       
+
+            function successFunc(response) {
+                location.reload();
+                    
+                }
+
+            function errorFunc() {
+                    alert('error');
+                    alert(response)
+                }
+        });
+        
+        
+   
+</script>
+
+   
+            
+    
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "artikli/base.html" %}
+{% block content %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ime
+            </th>
+            <th>
+                Kvantiteta
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in paketi %}
+        <tr>
+            <td>{{ p.paket }}</td>
+            <td>{{ p.kvantiteta }}</td>
+            <td>
+                <form action="{% url 'paket-update' p.id %}">
+                    <input type="submit" value="Uredi" />
+                </form> 
+                  
+            </td>
+            <td>
+                <form action="{% url 'paket-delete' p.id %}">
+                    <input type="submit" value="Izbriši" />
+                </form> 
+                  
+            </td>
+
+        </tr>
+        {% endfor %}
+        <td><form action="{% url 'paket-create' %}">
+            <input type="submit" value="Dodaj paket" />
+        </form> </td>
+
+    </tbody>
+</table>
+
+{% endblock %}

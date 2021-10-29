@@ -1,0 +1,47 @@
+{% extends "artikli/base.html" %}
+{% block content %}
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Radno mjesto</th>
+      <th scope="col">Iznos</th>
+      
+
+      <th scope="col">Uredi</th>
+      <th scope="col">Izbriši</th>
+
+    </tr>
+</thead>
+<tbody>
+{% for rm in radnaMjesta %}
+    <tr>
+        <td>{{ rm.radnoMjesto }}</td>
+        <td>{{ rm.iznos }} KM</td>
+        
+        
+        <td>
+            <form action="{% url 'smjena-update' rm.id %}">
+                <input type="submit" value="Uredi" />
+            </form> 
+              
+        </td>
+        <td>
+            <form action="{% url 'smjena-delete' rm.id %}">
+                <input type="submit" value="Izbriši" />
+            </form> 
+              
+        </td>
+    </tr>
+{% endfor %}
+<tr> 
+    <td><form action="{% url 'smjena-create' %}">
+        <input type="submit" value="Dodaj radno mjesto" />
+    </form> </td>
+    
+</tr>
+</tbody>
+
+
+</table>
+
+{% endblock %}

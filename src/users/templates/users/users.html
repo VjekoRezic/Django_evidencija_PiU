@@ -1,0 +1,70 @@
+{% extends  "artikli/base.html" %}
+{% block content %}
+<table class="table">
+
+    <thead>
+        <tr>
+          <th scope="col">Username</th>
+          
+          <th scope="col">Izbriši</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for u in users %}
+    <tr>
+        <td>{{ u.username }}</td>
+        
+        <td>
+            <button type="submit" id="{{ u.id }}" class="btnDel"  >
+                Izbriši
+            </button>  
+        </td>
+    </tr>
+    
+{% endfor %}
+<tr>
+    <td>
+        <form action="{% url 'user-create' %}">
+            <input type="submit" value="Dodaj korisnika" />
+        </form>  
+    </td>
+</tr>
+</tbody>
+
+
+</table>
+
+<script type="text/javascript" >
+        
+    $(".btnDel").click(function(e){
+        
+        
+        var id=$(this).attr('id');
+        
+        
+        
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'user-del' %}" ,
+            data:{
+                'userid':id,
+                "csrfmiddlewaretoken": '{{ csrf_token }}'
+            },
+            success: successFunc
+
+        });       
+
+        function successFunc(response) {
+                location.reload();
+            }
+
+        function errorFunc() {
+                alert('error');
+            }
+    });
+    
+    
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "artikli/base.html" %}
+
+{% block content %}
+{% url 'artikli-dodaj-na-racun' as the_url %}
+<div class="container" >
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    
+    <table class="table">
+
+        <thead>
+            <tr>
+              <th scope="col">Radno mjesto</th>
+              <th scope="col">Smjena</th>
+              <th scope="col">Dodaj u troškove</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for smjena in smjene %}
+            <tr>
+                <td>{{ smjena.radnoMjesto }}</td>
+                <td>{{ smjena.iznos }}</td>
+                <td>
+                    <button type="submit" id="{{ smjena.id }}" class="btn" data-url="{% url 'smjena-dodaj-troskove' %}?id={{ smjena.id }}" >
+                        Dodaj na troškovnik
+                    </button>  
+                </td>
+            </tr>
+        {% endfor %}
+        <tr> 
+            <td><form action="{% url 'smjene-pregled' %}">
+                <input type="submit" value="Pregled smjena" />
+            </form> </td>
+        </tr>
+        </tbody>
+
+
+    </table>
+</div>
+    
+   
+    <script type="text/javascript">
+        
+            $(".btn").click(function(e){
+                
+                
+                var urlDodaj=$(this).attr('data-url');
+                
+                
+                $.ajax({
+                    type: 'GET',
+                    url: urlDodaj,
+                    success: successFunc
+
+                });       
+
+                function successFunc(response) {
+                        alert(response);
+                    }
+
+                function errorFunc() {
+                        alert('error');
+                    }
+                
+                
+                
+            });
+            
+            
+       
+    </script>
+    
+    
+    
+
+{% endblock %}

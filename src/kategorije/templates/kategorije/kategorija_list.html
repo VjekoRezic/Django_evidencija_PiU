@@ -1,0 +1,40 @@
+{% extends "artikli/base.html" %}
+{% block content %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Kategorija
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for k in kategorije %}
+        <tr>
+            <td>{{ k.kategorija }}</td>
+            <td>
+                <form action="{% url 'kategorija-update' k.id %}">
+                    <input type="submit" value="Uredi" />
+                </form> 
+                  
+            </td>
+            <td>
+                <form action="{% url 'kategorija-delete' k.id %}">
+                    <input type="submit" value="Izbriši" />
+                </form> 
+                  
+            </td>
+
+        </tr>
+        {% endfor %}
+        <td><form action="{% url 'kategorije-create' %}">
+            <input type="submit" value="Dodaj kategoriju" />
+        </form> </td>
+
+    </tbody>
+</table>
+
+{% endblock %}
